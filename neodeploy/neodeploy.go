@@ -5,15 +5,17 @@ import (
   "fmt"
   "neodeploy/projects/cce"
   "neodeploy/projects/oak"
+  "neodeploy/service/manage"
 )
 
 func main() {
   var settingsdeploy string = "settingsdeploy.json"
+  manage.CheckFile(settingsdeploy)
   if len(os.Args) == 1 {
-    fmt.Println("Требуется параметр для запуска")
+    fmt.Println("ERROR: Требуется параметр для запуска")
     os.Exit(0)
   } else if len(os.Args) > 2 {
-    fmt.Println("Должен быть один параметр")
+    fmt.Println("ERROR: Должен быть один параметр")
   } else {
     switch {
       case os.Args[1] == "oak":

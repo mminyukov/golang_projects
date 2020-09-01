@@ -1,0 +1,14 @@
+[Unit]
+Description={{ .Project_name }}
+
+[Service]
+WorkingDirectory={{ .Target_directory_site }}
+ExecStart=/usr/bin/dotnet {{ .Target_directory_site }}/{{ .Target_service_name }}
+Restart=always
+RestartSec=10
+SyslogIdentifier={{ .Project_name}}.{{ .Stand_name }}
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+CPUQuota=80%
+[Install]
+WantedBy=multi-user.target
