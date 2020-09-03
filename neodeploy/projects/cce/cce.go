@@ -4,8 +4,8 @@ import (
   "os"
   "fmt"
   "path"
-  "neodeploy/service/manage"
   "neodeploy/service/unzip"
+  "neodeploy/service/manage"
   "neodeploy/service/recreatedb"
   "neodeploy/service/settingsedit"
   "neodeploy/service/templates/unit"
@@ -14,8 +14,7 @@ import (
 
 func Install(filename string) {
   config, _ := configcce.LoadJson(filename)
-  var prefix_directory string = "/usr/local/share"
-  var target_directory string = path.Join(prefix_directory,"cce",config.Cce.Stand_name)
+  var target_directory string = path.Join(config.Mainconf.Prefix_directory,"cce",config.Cce.Stand_name)
   var target_directory_site string = path.Join(target_directory,"JobStarter")
   var target_directory_dbupdater string = path.Join(target_directory,"DbUpdater")
   var site_service_name string = "cce." + config.Cce.Stand_name + ".service"
@@ -47,8 +46,8 @@ func Install(filename string) {
     recreatedb.Cce(target_directory_dbupdater)
   }
 
-  createunit.Createunit("cce",config.Cce.Stand_name,target_directory_site,config.Cce.Target_service_name,site_service_file)
-  os.Chmod("some-filename", 0777)
+  createunit.Createunit("cce",site_service_file,config.Cce.Stand_name,target_directory_site,config.Cce.Target_service_name)
+  os.Chmod(path.Join(target_directory_site,config.Cce.Target_service_name), 0777)
   manage.Action("daemon-reload",site_service_name)
   manage.Action("enable",site_service_name)
   manage.Action("start",site_service_name)

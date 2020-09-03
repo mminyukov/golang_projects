@@ -1,0 +1,17 @@
+[Unit]
+Description=oak
+
+[Service]
+WorkingDirectory={{ .Target_directory_site }}
+ExecStart={{ .Target_directory_site }}/{{ .Target_service_name }}
+Restart=always
+RestartSec=10
+SyslogIdentifier={{ .Project_name}}.{{ .Stand_name }}
+User={{ .Site_user_name }}
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=HOME={{ .Site_run_directory }}
+Environment=ASPNETCORE_URLS=http://*:{{ .Port_site }}/
+
+[Install]
+WantedBy=multi-user.target

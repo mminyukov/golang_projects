@@ -36,3 +36,10 @@ func CheckFile(filename string) {
     os.Exit(1)
   }
 }
+
+func RemoveDir(target_directory string) {
+  if _, err := os.Stat(target_directory); err == nil {
+    fmt.Println("INFO: Очищаем директорию:",target_directory)
+    os.RemoveAll(target_directory)
+  }
+}

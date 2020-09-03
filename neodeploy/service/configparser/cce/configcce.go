@@ -14,6 +14,11 @@ type Config struct {
     Connection_string string `json:"connection_string"`
     Main_zip_name string `json:"main_zip_name"`
   } `json:"cce"`
+  Mainconf Mainconf `json:"main"`
+}
+
+type Mainconf struct {
+  Prefix_directory string `json:"prefix_directory"`
 }
 
 func LoadJson(filename string) (Config, error) {
@@ -26,5 +31,6 @@ func LoadJson(filename string) (Config, error) {
   }
   jsonParser := json.NewDecoder(jsonFile)
   err = jsonParser.Decode(&config)
+
   return config, err
 }

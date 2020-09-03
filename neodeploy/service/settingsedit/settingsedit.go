@@ -56,3 +56,28 @@ func Cce(filepath string, connstrings ...string) {
   }
   WriteJson(filepath, result)
 }
+
+func Oak(filepath string, connstrings ...string) {
+  fmt.Println("INFO: Устанавливаем пользовательские параметры в файл:", filepath)
+  result := OpenJson(filepath)
+  if result["Data"] != nil {
+    tmp := result["Data"].(map[string]interface{})
+    tmpconn := tmp["PostgreSql"].(map[string]interface{})
+    if tmpconn["ConnectionString"] != nil {
+      tmpconn["ConnectionString"] = connstrings[0]
+    }
+    if tmpconn["HangfireConnectionString"] != nil {
+      tmpconn["HangfireConnectionString"] = connstrings[1]
+    }
+    if tmpconn["UserConnectionString"] != nil {
+      tmpconn["UserConnectionString"] = connstrings[2]
+    }
+  }
+  if result["cci"] != nil {
+    tmp := result["cci"].(map[string]interface{})
+    if tmp["connection_string"] != nil {
+      tmp["connection_string"] = connstrings[3]
+    }
+  }
+  WriteJson(filepath, result)
+}

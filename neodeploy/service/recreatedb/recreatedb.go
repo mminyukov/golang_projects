@@ -18,3 +18,15 @@ func Cce(workdir string) {
   fmt.Printf("%s\n", stdoutStderr)
   os.Chdir(currentdir)
 }
+
+func Oak(workdir string) {
+  currentdir, _ := os.Getwd()
+  os.Chdir(workdir)
+  cmd := exec.Command("./Neolant.OAK.DbUpdater", "-r", "-f")
+  stdoutStderr, err := cmd.CombinedOutput()
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Printf("%s\n", stdoutStderr)
+  os.Chdir(currentdir)
+}
